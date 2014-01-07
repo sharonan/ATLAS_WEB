@@ -1,0 +1,601 @@
+<?php
+class SiteController extends Controller {
+
+	function homepage(){
+		$this->view('homepage');
+		$this->set('header', 2);
+		$this->set('hidepro', true);
+		$this->set('nofooter', true);
+		$this->set('nospace', true);
+	}
+
+	function index($input = false){
+		$this->homepage();
+		return false;
+	}
+
+	function about(){
+		$this->set('header', 2);
+		$this->set('hidepro', true);
+		$this->set('nofooter', true);
+		$this->set('nospace', true);
+		$this->set('mission', true);
+	}
+	
+	function privacy(){
+		$this->set('header', 2);
+		$this->set('hidepro', true);
+		$this->set('nofooter', true);
+		$this->set('nospace', true);
+		$this->set('mission', false);
+	}
+	
+	function terms(){
+		$this->set('header', 2);
+		$this->set('hidepro', true);
+		$this->set('nofooter', true);
+		$this->set('nospace', true);
+		$this->set('mission', false);
+	}
+	
+	function verify($input = false){
+		if(!$input) {
+			$this->homepage();
+			return false;
+		}
+		$email = $this->curlobject(array('email_address_id' => $input), VERIFYEMAIL, array('limit'=>1), false);
+		$this->putcurlobject($email->objectId, array('is_verified'=>true), VERIFYEMAIL);
+		$this->pushNotificationVerifyEmail($email->atlas_id);
+
+		$user	= $this->curlobject(array('objectId'=>$email->atlas_id),	USER);
+
+		$vars = array(
+			'env'			=> DIRECTORY,
+			'user_picture'	=> $user->picture,
+			'user_firstname'=> $user->first_name,
+			'datetime_created'=> date("F d, Y"),
+		);
+
+		if($email->email_address === $user->email){
+			$vars = array(
+			    'env'			=> DIRECTORY,
+			    'user_picture'	=> $user->picture->url,
+			    'user_firstname'=> $user->first_name,
+			    'datetime_created'=> date("F d, Y"),
+			);
+			$message = $this->mailitem($vars);
+			$insert = array(
+			    'body'		=> $message,
+			    'from'		=> 'team@getatlas.com',
+			    'from_name'	=> 'Team Atlas',
+			    'is_sent'	=> false,
+			    'is_pending'=> false,
+			    'has_error'	=> false,
+			    'subject'	=> 'Welcome to Atlas',
+			    'to'		=> $email->email_address
+			);
+			$this->postcurlobject($insert, 'https://api.parse.com/1/classes/outbound_email');
+		}
+
+		$this->set('user', $user);
+	}
+
+	function pro($input = false){
+		$user	= $this->curlobject(array('site_name' => $input),	USER, array('limit'=>1), false);
+		if(!$user) {
+			$this->homepage();
+			return false;
+		}
+
+		$timezones = '<select name="userTimeZone" id="userTimeZone">';
+		$timezones .= '
+			<option value="America/Los_Angeles">(GMT-08:00) Pacific Time</option>
+			<option value="Pacific/Honolulu">(GMT-10:00) Hawaii Time</option>
+			<option value="America/Anchorage">(GMT-09:00) Alaska Time</option>
+			<option value="America/Denver">(GMT-07:00) Mountain Time</option>
+			<option value="America/Phoenix">(GMT-07:00) Mountain Time - Arizona</option>
+			<option value="America/Chicago">(GMT-06:00) Central Time</option>
+			<option value="America/New_York">(GMT-05:00) Eastern Time</option>';
+		$timezones .= '</select>';
+
+		$this->view('index');
+		$this->set('timezones', $timezones);
+		$this->set('atlas_id', $input);
+		$this->set('user', $user);
+		$this->set('nofooter', true);
+	}
+	
+	function free($input = false){
+		$user	= $this->curlobject(array('objectId' => $input),	USER, array('limit'=>1), false);
+		if(!$user) {
+			$this->homepage();
+			return false;
+		}
+
+
+		$timezones = '<select name="userTimeZone" id="userTimeZone">';
+		$timezones .= '
+			<option value="America/Los_Angeles">(GMT-08:00) Pacific Time</option>
+			<option value="Pacific/Honolulu">(GMT-10:00) Hawaii Time</option>
+			<option value="America/Anchorage">(GMT-09:00) Alaska Time</option>
+			<option value="America/Denver">(GMT-07:00) Mountain Time</option>
+			<option value="America/Phoenix">(GMT-07:00) Mountain Time - Arizona</option>
+			<option value="America/Chicago">(GMT-06:00) Central Time</option>
+			<option value="America/New_York">(GMT-05:00) Eastern Time</option>';
+		$timezones .= '</select>';
+
+		$this->view('index');
+		$this->set('timezones', $timezones);
+		$this->set('atlas_id', $input);
+		$this->set('user', $user);
+		$this->set('nofooter', true);
+	}
+
+	function invited($input){
+		$event	= $this->curlobject(array('web_event_id'=>$input), EVENT, array('limit'=>1), false);
+		if(!$event) {
+			$this->homepage();
+			return false;
+		}
+		$inputs = array('web_item_id'=>array('$in'=>array($input)));
+		$invitee_items	= $this->curlobject($inputs, ITEMUSER, false, true);
+
+		foreach($invitee_items as $item){
+			if($item->atlas_id != $event->atlas_id) $proatlasid = $item->atlas_id;
+		}
+
+		$user	= $this->curlobject(array('objectId' => $proatlasid),	USER, array('limit'=>1), false);
+		$extra	= $this->curlobject(array('primary_web_event_id' =>$input), EVENT, array('order'=>'display_order'), true);
+
+		$count = 1;
+		if($extra) foreach($extra as $k) $count++;
+
+		$this->set('count', $count);
+		$this->set('event', $event);
+		$this->set('user', $user);
+		$this->set('nofooter', true);
+		$this->set('invited_footer', true);
+
+	}
+//	function invited($input){
+//		$event	= $this->curlobject(array('web_event_id' =>$input),		EVENT, array('limit'=>1), false);
+//		if(!$event) {
+//			$this->homepage();
+//			return false;
+//		}
+//		$inputs = array('web_item_id'=>array(
+//						'$in'=>array($input)));
+//		$invitee_items	= $this->curlobject($inputs,	ITEMUSER,	false, true);
+//
+//		foreach($invitee_items as $item){
+//			if($item->atlas_id != $event->atlas_id) $proatlasid = $item->atlas_id;
+//		}
+//
+//		$user	= $this->curlobject(array('objectId' => $proatlasid),	USER, array('limit'=>1), false);
+//		$extra	= $this->curlobject(array('primary_web_event_id' =>$input), EVENT, array('order'=>'display_order'), true);
+//
+//		$count = 1;
+//		if($extra) foreach($extra as $k) $count++;
+//
+//		$this->set('count', $count);
+//		$this->set('event', $event);
+//		$this->set('user', $user);
+//		$this->set('nofooter', true);
+//		$this->set('invited_footer', true);
+//
+//	}
+
+
+
+	function respond($input){
+//		$request = array(
+//		    'objectId1'=>'1D50NJk1YB',
+//		    'objectId2'=>'d16smok3bc'
+//		);
+//		$result = $this->postcurlobject($request, multipleUserObjectTest);
+//		echo "<pre>";
+//		echo "RESULT:\n";
+//		print_r($result);
+//		echo "\nUSER_1:\n";
+//		print_r($result->user1);
+//		echo "\n\nUSER_1.username:\n";
+//		print_r(json_decode($result->user1)->username);
+//		echo "\n\nUSER_2.username:\n";
+//		print_r(json_decode($result->user2)->username);
+//		echo "\n\n</pre>";
+		
+//LEFT OFF...
+//		$result = $this->postcurlobject(array('web_item_user_id'=>$input), RESPOND);
+//		echo "<pre>";
+//		echo "RESULT:\n";
+//		print_r($result);
+//		echo "\\n myPrimaryItemUser:\n";
+//		print_r($result->myPrimaryItemUser);
+//		echo "\\n event:\n";
+//		print_r($result->event);
+//		echo "\n\n</pre>";
+		//NEEDS - the event and all it's alternateEvents, and all the itemUsers for each of those events, and the user info for each itemUser.
+		
+		//get the itemUser for the webItemUserId passed
+		$itemUser	= $this->curlobject(array('web_item_user_id'=>$input), ITEMUSER, array('limit'=>1), false);
+		//get the event for that itemUser
+		$event	= $this->curlobject(array('web_event_id'=>$itemUser->web_item_id), EVENT, array('limit'=>1), false);
+
+		if(!$event) {
+			$this->homepage();
+			return false;
+		}
+
+		//get all the alternate events
+		$altEventArray = $this->curlobject(array('primary_web_event_id'=>$itemUser->web_item_id), EVENT, array('order'=>'display_order'), true);
+
+//for event
+		//some array for something.  event.displayOrder is always 0 here
+		$eventInfoArray[$event->display_order] = array(
+			'time'		 				=>$this->timeduration($event->start_datetime->iso, $event->duration),
+			'web_event_id'		=>$event->web_event_id,
+			'atlas_id'				=>$event->atlas_id,
+			'duration'				=>$event->duration,
+			'status'					=>$event->status,
+			'title'						=>$event->title,
+			'location'				=>$event->location,
+			'selected'				=>$itemUser->priority_order,
+			'web_item_user_id'=>$itemUser->web_item_user_id,
+		);
+		$eventIdArray[] = $event->web_event_id;
+		//$eventIdArray[]	= $itemUser->web_item_id;		
+		//some array with just the time.  array index is eventId rather than displayOrder for some reason.
+		$eventTimeArray[$event->web_event_id] = $this->timeduration($event->start_datetime->iso, $event->duration);
+		
+//for alt events - note, it adds the info for the itemUser for each alt event (selected and web_item_user_id) down below
+		if($altEventArray) foreach($altEventArray as $altEvent){
+			$eventInfoArray[$altEvent->display_order] = array(
+				'time'					=>$this->timeduration($altEvent->start_datetime->iso, $altEvent->duration),
+				'web_event_id'	=>$altEvent->web_event_id,
+				'atlas_id'			=>$altEvent->atlas_id,
+				'duration'			=>$altEvent->duration,
+				'status'				=>$altEvent->status,
+				'title'					=>$altEvent->title,
+				'location'			=>$altEvent->location,
+			);
+			$eventIdArray[] = $altEvent->web_event_id;
+			$eventTimeArray[$altEvent->web_event_id] = $this->timeduration($altEvent->start_datetime->iso, $altEvent->duration);
+		}
+		
+		
+		$booked = false;
+		$selected = false;
+		foreach($eventInfoArray as $eventInfo){
+			if($eventInfo['status'] == 1){
+				$picked = $eventInfo['time']; //why are we putting a time in a boolean, and then not doing anything with it?
+			}
+			if($eventInfo['status'] > 0){
+				$selected = true;
+			}
+		}
+		$multi_picked = false;
+		
+		//some array with web_item_id as an array with a key of '$in'=an array of eventId's
+		$inputs = array('web_item_id'=>array('$in'=>$eventIdArray),'atlas_id'=>$itemUser->atlas_id);
+		//somehow this returns all this user's itemUsers for these events
+		$itemUserArray	= $this->curlobject($inputs,	ITEMUSER,	false, true);
+		
+		//mark the invite as received.
+		$doupdate = true;
+		if($itemUserArray) {
+			foreach($itemUserArray as $aItemUser){
+				if($aItemUser->was_received == true) $doupdate = false;
+			}
+		}
+		if($doupdate) $this->putcurlobject($itemUser->objectId,array(
+						'was_received'=>true,
+						'received_datetime'=>array('__type'=>'Date', 'iso'=>date('Y-m-d\TH:i:s.000\Z') )
+					), ITEMUSER);
+		if($altEventArray) foreach($altEventArray as $altEvent){
+			foreach($itemUserArray as $aItemUser){
+				if($aItemUser->priority_order || $aItemUser->status) $multi_picked = true;
+				if($altEvent->web_event_id == $aItemUser->web_item_id){
+					$eventInfoArray[$altEvent->display_order]['web_item_user_id'] = $aItemUser->web_item_user_id;
+					$eventInfoArray[$altEvent->display_order]['selected'] = $aItemUser->priority_order;
+//					if($doupdate)	$this->putcurlobject($aItemUser->objectId,array(
+//						'was_received'=>true,
+//						'received_datetime'=>array('__type'=>'Date', 'iso'=>date('Y-m-d\TH:i:s.000\Z') )
+//					), ITEMUSER);
+				}
+			}
+		}
+
+		$picked = false;
+		foreach($itemUserArray as $aItemUser){
+			if($aItemUser->status > 0){
+				$selected = true;
+				if(($aItemUser->status == 1) && (!$picked)){
+					$picked = $eventTimeArray[$aItemUser->web_item_id];
+				}
+			}
+		}
+
+		$bookedview = false;
+		if($selected && $picked){
+			$bookedview = true;
+			$this->view('booked');
+		} elseif($selected && !$picked){
+			$this->view('declined');
+		}
+
+		$inputs = array('web_item_id'=>array('$in'=>$eventIdArray));
+		$itemUserArray = $this->curlobject($inputs,	ITEMUSER,	false, true);
+
+		$counter = false;
+		foreach($itemUserArray as $aItemUser) {
+			$inviteeArray[$aItemUser->atlas_id] = $aItemUser->atlas_id;
+			if($aItemUser->status == 4) $counter = true;
+			if($aItemUser->atlas_id != $itemUser->atlas_id) $otherInviteeArray[] = $aItemUser->atlas_id;
+		}
+		$multi = count($inviteeArray) > 2;
+
+		$inviter	= $this->curlobject(array('objectId' => $event->atlas_id),	USER, array('limit'=>1), false);
+		$invitee	= $this->curlobject(array('objectId' => $itemUser->atlas_id), USER, array('limit'=>1), false);
+
+		if(!$inviter->is_atlas_user) {
+			$tmp = $invitee;
+			$invitee = $inviter;
+			$inviter = $tmp;
+			$tmp = null;
+		}
+
+//i have no idea why this is here.  but this is what it is doing.
+//if the inviter is not an atlas user.  then look up all the other invitees until find one that is an atlas user.
+		if(!$inviter->is_atlas_user) {
+			foreach($otherInviteeArray as $atlasId){
+				//if($atlasId != $itemUser->atlas_id) 
+				$inviter	= $this->curlobject(array('objectId' => $atlasId),	USER, array('limit'=>1), false);
+				if($inviter->is_atlas_user) break;
+			}
+		}
+
+		/*
+		echo "<pre>";
+		echo "ITEM_USER:\n";
+		print_r($itemUser);
+		echo "EVENT:\n";
+		print_r($event);
+		echo "ALT_EVENT_ARRAY:\n";
+		print_r($altEventArray);
+		echo "ITEM_USER_ARRAY\n";
+		print_r($itemUserArray);
+		echo "INVITER_ITEMS\n";
+		print_r($inviter_items);
+		echo "DATA\n";
+		print_r($data);
+		echo "USER\n";
+		print_r($user);
+		echo "</pre>";
+		*/
+
+		//$this->pushNotification($event->atlas_id, $user->first_name, $eventtimesr['time'], $event->title, $itemUser->web_item_id);
+
+
+		if($multi) $this->view('multi');
+		$this->set('hidepro', true);
+		$this->set('counter', $counter);
+		$this->set('multi_picked', $multi_picked);
+		$this->set('web_item_user_id', $itemUser->web_item_user_id);
+		$this->set('web_item_id', $itemUser->web_item_id);
+		$this->set('event', $event);
+		$this->set('data', $invitee);
+		$this->set('user', $inviter);
+		$this->set('times', $eventInfoArray);
+		$this->set('picked', $picked);
+	}
+
+//function respond($input){
+//		//get the 
+//		$request	= $this->curlobject(array('web_item_user_id'=>$input), ITEMUSER, array('limit'=>1), false);
+//		$event	= $this->curlobject(array('web_event_id'=>$request->web_item_id), EVENT, array('limit'=>1), false);
+//
+//		if(!$event) {
+//			$this->homepage();
+//			return false;
+//		}
+//
+//		$extra	= $this->curlobject(array('primary_web_event_id' =>$request->web_item_id), EVENT, array('order'=>'display_order'), true);
+//
+//		$times[$event->display_order] = array(
+//			'time'		=>$this->timeduration($event->start_datetime->iso, $event->duration),
+//			'web_event_id'	=>$event->web_event_id,
+//			'atlas_id'	=>$event->atlas_id,
+//			'duration'	=>$event->duration,
+//			'web_item_user_id'=>$request->web_item_user_id,
+//			'status'		=> $event->status,
+//			'title'		=>$event->title,
+//			'location'	=>$event->location,
+//			'selected'	=>$request->priority_order,
+//		);
+//		$eventtimes[$event->web_event_id] = $this->timeduration($event->start_datetime->iso, $event->duration);
+//		$ins[]	= $request->web_item_id;
+//		if($extra) foreach($extra as $obj){
+//			$times[$obj->display_order] = array(
+//				'time'		=>$this->timeduration($obj->start_datetime->iso, $obj->duration),
+//				'web_event_id'	=>$obj->web_event_id,
+//				'atlas_id'	=>$obj->atlas_id,
+//				'duration'	=>$obj->duration,
+//				'status'		=>$obj->status,
+//				'title'		=>$obj->title,
+//				'location'	=>$obj->location,
+//			);
+//			$ins[] = $obj->web_event_id;
+//			$eventtimes[$obj->web_event_id] = $this->timeduration($obj->start_datetime->iso, $obj->duration);
+//	//		$eventtimesr = $this->timeduration($obj->start_datetime->iso, $obj->duration);
+//		}
+//		$booked = false;
+//		$selected = false;
+//		foreach($times as $time){
+//			if($time['status'] == 1){
+//				$picked = $time['time'];
+//			}
+//			if($time['status'] > 0){
+//				$selected = true;
+//			}
+//		}
+//		$multi_picked = false;
+//		$inputs = array('web_item_id'=>array(
+//						'$in'=>$ins),
+//					  'atlas_id'=>$request->atlas_id);
+//		$invitee_items	= $this->curlobject($inputs,	ITEMUSER,	false, true);
+//		$doupdate = true;
+//		if($invitee_items) {
+//			foreach($invitee_items as $obj2){
+//				if($obj2->was_received == true) $doupdate = false;
+//			}
+//		}
+//		if($doupdate) $this->putcurlobject($request->objectId,array(
+//						'was_received'=>true,
+//						'received_datetime'=>array('__type'=>'Date', 'iso'=>date('Y-m-d\TH:i:s.000\Z') )
+//					), ITEMUSER);
+//		if($extra) foreach($extra as $obj){
+//			foreach($invitee_items as $obj2){
+//				if($obj2->priority_order || $obj2->status) $multi_picked = true;
+//				if($obj->web_event_id == $obj2->web_item_id){
+//					$times[$obj->display_order]['web_item_user_id'] = $obj2->web_item_user_id;
+//					$times[$obj->display_order]['selected'] = $obj2->priority_order;
+//					if($doupdate)	$this->putcurlobject($obj2->objectId,array(
+//						'was_received'=>true,
+//						'received_datetime'=>array('__type'=>'Date', 'iso'=>date('Y-m-d\TH:i:s.000\Z') )
+//					), ITEMUSER);
+//				}
+//			}
+//
+//		}
+//
+//		$picked = false;
+//		foreach($invitee_items as $obj2){
+//			if($obj2->status > 0){
+//				$selected = true;
+//				if(($obj2->status == 1) && (!$picked)){
+//					$picked = $eventtimes[$obj2->web_item_id];
+//				}
+//			}
+//		}
+//
+//		$bookedview = false;
+//		if(($selected && $picked)){
+//			$bookedview = true;
+//			$this->view('booked');
+//		} elseif($selected && !$picked){
+//			$this->view('declined');
+//		}
+//
+//		$inputs = array('web_item_id'=>array(
+//						'$in'=>$ins));
+//		$inviter_items		= $this->curlobject($inputs,	ITEMUSER,	false, true);
+//
+//		$counter = false;
+//		foreach($inviter_items as $inviter_item) {
+//			$inviters[$inviter_item->atlas_id] = $inviter_item->atlas_id;
+//			if($inviter_item->status == 4) $counter = true;
+//			if($inviter_item->atlas_id != $request->atlas_id) $otherids[] = $inviter_item->atlas_id;
+//		}
+//		if(count($inviters) > 2) $multi = true;
+//		else					$multi = false;
+//
+//
+//
+//		$user	= $this->curlobject(array('objectId' => $event->atlas_id),	USER, array('limit'=>1), false);
+//		$data	= $this->curlobject(array('objectId' => $request->atlas_id), USER, array('limit'=>1), false);
+//
+//		if(!$user->is_atlas_user) {
+//			$tmp = $data;
+//			$data = $user;
+//			$user = $tmp;
+//			$tmp = null;
+//		}
+//
+//		if(!$user->is_atlas_user) {
+//			foreach($otherids as $id){
+//				if($id != $request->atlas_id)
+//				$user	= $this->curlobject(array('objectId' => $id),	USER, array('limit'=>1), false);
+//				if($user->is_atlas_user) break;
+//			}
+//		}
+//
+//		/*
+//		echo "<pre>";
+//		echo "REQUEST:\n";
+//		print_r($request);
+//		echo "EVENT:\n";
+//		print_r($event);
+//		echo "EXTRA:\n";
+//		print_r($extra);
+//		echo "INVITEE_ITEMS\n";
+//		print_r($invitee_items);
+//		echo "INVITER_ITEMS\n";
+//		print_r($inviter_items);
+//		echo "DATA\n";
+//		print_r($data);
+//		echo "USER\n";
+//		print_r($user);
+//		echo "</pre>";
+//		*/
+//
+//		//$this->pushNotification($event->atlas_id, $user->first_name, $eventtimesr['time'], $event->title, $request->web_item_id);
+//
+//
+//		if($multi) $this->view('multi');
+//		$this->set('hidepro', true);
+//		$this->set('counter', $counter);
+//		$this->set('multi_picked', $multi_picked);
+//		$this->set('web_item_user_id', $request->web_item_user_id);
+//		$this->set('web_item_id', $request->web_item_id);
+//		$this->set('event', $event);
+//		$this->set('data', $data);
+//		$this->set('user', $user);
+//		$this->set('times', $times);
+//		$this->set('picked', $picked);
+//	}
+	function booked($input){
+		if(!$input) {
+			$this->homepage();
+			return false;
+		}
+		$user	= $this->curlobject(array('objectId' => $input),	USER, array('limit'=>1), false);
+
+		$this->set('atlas_id', $input);
+		$this->set('user', $user);
+		$this->set('nofooter', true);
+	}
+
+	function booksingle($input){
+		list($input, $web_event_id) = explode('-', $input);
+		$this->template('ajax');
+		$this->putcurlobject(array('status'=>1, 'was_received'=>false, 'status_datetime'=>date()),array('web_item_user_id' =>$input), ITEMUSER);
+		$this->putcurlobject(array('status'=>1),array('web_event_id' =>$web_event_id), EVENT);
+	}
+
+	function downloadical(){
+		// return the ics file
+		$start    = $_POST['start'];
+		$duration	= $_POST['duration'];
+		$title    = $_POST['title'];
+		$desc     = $_POST['desc']." Booked with Atlas. http://getatlas.com";
+		$location = $_POST['location'];
+		$this->ICS($start,$duration,$title,$desc,$location);
+		$this->showical();
+		$this->template('ajax');
+		exit;
+	}
+
+	function downloadgoogle(){
+		// return the ics file
+		$start    = $_POST['start'];
+		$duration	= $_POST['duration'];
+		$title    = $_POST['title'];
+		$desc     = $_POST['desc']."
+Booked with Atlas. http://getatlas.com";
+		$location = $_POST['location'];
+		$webitem	= $_POST['webitem'];
+		echo $this->googleCal($start,$duration,$title,$desc,$location,$webitem);
+		$this->template('ajax');
+		exit;
+	}
+}

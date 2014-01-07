@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head style="background-color:blue;">
+    <meta charset="utf-8">
+    <title>Atlas</title>
+    <link rel="icon" href="https://launchrock-assets.s3.amazonaws.com/favicon-files/y3d2El5mjKplmgt.png">
+    <link href="css/invite_to_atlas.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="css/jquery_alerts.css" media="all" rel="stylesheet" type="text/css"/>
+    
+    <meta name="viewport" content="width=device-width; initial-scale=.5; maximum-scale=.5; user-scalable=0;">
+   
+   
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/underscore-1.1.6.js"></script>
+    <script src="http://www.parsecdn.com/js/parse-1.1.14.min.js"></script>
+    <script src="js/invite_to_atlas_mobile.js"></script>
+    <script src="js/alerts.js"></script>
+    <!--IOS Alert-->
+<script type="text/javascript">
+function iPhoneAlert() {
+	if((navigator.userAgent.match(/iPhone/i))||(navigator.userAgent.match(/iPod/i))){
+		setTimeout(function() { window.scrollTo(0, 1) }, 100);
+	}
+}
+</script>
+<body>
+<!--Body-->
+<body onLoad="iPhoneAlert();">
+<section id="container">
+  <header id="header"> 
+  	<img src="images/header_atlas_invite_img.png" width="640" height="94" alt="Calendar Invite"> 
+  	</header>
+  <footer>
+    <div id="footer"
+    	><!--Link nav_img.png to download Atlas-->
+    	<img src="images/nav_img.png" width="640" height="98" alt="Navigation">
+    </div>
+  </footer>
+  <section>
+    <div id="invite_section">
+    	<!--Make dynamic--><img src="images/avatar.png" alt="Avatar" name="avatar" width="76" height="76" id="avatar">
+     <div id="description">
+        <h1 id="invitername"><span class="blue_text"></span>  </h1>
+        <h1> <span class="blue_text">Atlas</span>. Lucky you.</h1>
+      </div>
+    </div>
+  </section>
+  <section>
+    </div>
+  </section>
+  <section> 
+    <!--Make dynamic-->
+    <div id="main_content"><img src="images/atlas_icon.png" width="167" height="120" alt="Confirm">
+      <p class="main_content_text">Atlas makes it really easy to collaborate with your friends and co-workers on your <span class="blue_text">calendars</span>, <span class="blue_text">contacts</span>, <span class="blue_text">tasks</span>, and<span class="blue_text"> notes</span>.
+   <br />
+      </p>
+      <p class="main_content_text">   It's simple & free!
+      </p>
+      <p class="main_content_text"><img src="images/app_store_logo.png" width="392" height="123"></p>
+      <p class="main_content_text"><img src="images/google_play_logo.png" width="394" height="138"></p>
+      <p class="main_content_text2" id="inviteText2"></p>
+      <p class="main_content_text3">Want to learn more?</p></div>
+  </section>
+</section>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head style="background-color:blue;">
+    <meta charset="utf-8">
+    <title>Task Assign</title>
+    <link rel="icon" href="https://launchrock-assets.s3.amazonaws.com/favicon-files/y3d2El5mjKplmgt.png">
+    <link href="css/task.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="css/jquery_alerts.css" media="all" rel="stylesheet" type="text/css"/>
+    
+    <meta name="viewport" content="width=device-width; initial-scale=.5; maximum-scale=.5; user-scalable=0;">
+   
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/underscore-1.1.6.js"></script>
+    <script src="https://www.parsecdn.com/js/parse-1.1.14.min.js"></script>
+    <script src="js/assign_to_task_mobile.js"></script>
+    <script src="js/alerts.js"></script>
+    <!--IOS Alert-->
+<script type="text/javascript">
+function iPhoneAlert() {
+	if((navigator.userAgent.match(/iPhone/i))||(navigator.userAgent.match(/iPod/i))){
+		setTimeout(function() { window.scrollTo(0, 1) }, 100);
+	}
+}
+</script>
+<body>
+<!--Body-->
+<body onLoad="iPhoneAlert();">
+<section id="container">
+  <header id="header"> <img src="images/header_task_img.png" width="640" height="94" alt="Task Invite"> </header>
+  <footer>
+    <div id="footer"><!--Link nav_img.png to download Atlas--><img src="images/nav_img.png" width="640" height="98" alt="Navigation"></div>
+  </footer>
+  <section>
+    <div id="invite_section"><img src="images/avatar.png" alt="Avatar" name="avatar" width="76" height="76" id="avatar">
+      <div id="description">
+        <h1 id="inviter"></h1>
+        <h2 id="taskTitle">"<span class="task_blue"></span>"</h2>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div id="task_choices">
+      <h1 id="acceptRejectTitle"></h1>
+      <div class="option"  > 
+      		<div class="check_active"  id="choose1"><img src="images/check_active.png" width="586" height="97" alt="chosen"></div>
+   		<img id="accept" src="images/accept_img.png" alt="Accept" name="accept_img" width="586" height="97" class="option_img">
+      </div>
+      <div class="option" >  
+      		<div class="check_active"  id="choose2"><img src="images/check_active.png" width="586" height="97" alt="chosen"></div>
+   		<img id="reject" src="images/decline_img.png" alt="Decline" name="decline_img" width="586" height="97" class="option_img">
+      </div>
+      
+    </div>
+    </div>
+  </section>
+  <section> 
+    <!--Make dynamic-->
+    <div id="confirm_task"><img src="images/confirm_img.png" width="448" height="72" alt="Confirm">
+    <div id="decline">Decline</div>
+      <p class="confirm_subtext" id="confirm_subtext"></p>
+    </div>
+  </section>
+</section>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=.5; maximum-scale=.5; user-scalable=0;">
+<title>Calendar Invite</title>
+<!--IOS Alert-->
+<script type="text/javascript">
+function iPhoneAlert() {
+	if((navigator.userAgent.match(/iPhone/i))||(navigator.userAgent.match(/iPod/i))){
+		setTimeout(function() { window.scrollTo(0, 1) }, 100);
+	}
+}
+</script>
+<style>
+body { margin: 0; padding: 0; color: #000000; font-family: "Myriad Pro", Arial, Helvetica; font-size: 0.8em; }
+#container { max-width: 640px; margin: 0 auto; text-align: left; height: 848px; width: 640px; position: relative; }
+#container #header { position: fixed; z-index: 5; }
+#container #invite_section { background-color: #e4e4e4; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #999; padding-top: 90px; padding-bottom: 18px; }
+#invite_section #avatar { float: left; padding-left: 20px; padding-top: 14px; }
+#invite_section #description { padding-top: 20px; padding-left: 114px; }
+#invite_section h1 { font-size: 26px; padding-bottom: 5px; }
+#invite_section #description h2 { font-size: 24px; font-weight: lighter; padding-left: 10px; }
+.event_blue { color: #1c59af; font-style: italic; }
+#time_choices h1 { font-size: 24px; font-weight: lighter; text-align: center; padding-right: 50px; padding-left: 50px; padding-top: 30px; padding-bottom: 30px; }
+.option { height: 97px; position: relative; margin-bottom: 30px; }
+.option .option_img { margin-top: 0px; margin-right: auto; margin-bottom: 0px; margin-left: auto; position: absolute; left: 24px; z-index: 1; }
+.option .date { position: absolute; z-index: 2; color: #e9e9e9; padding-top: 15px; padding-left: 135px; font-size: 20px; }
+.option .time_container { z-index: 3; position: absolute; padding-left: 95px; color: #FFF; font-size: 40px; vertical-align: top; }
+.option .list li { display: inline; list-style-type: none; }
+.option #check { position: absolute; z-index: 4; left: 550px; top: 40px; }
+.am_pm { color: #e9e9e9; font-size: 24px; }
+.time { color: #FFF; font-weight: normal; }
+.option .check_active { opacity : 0; transition-property : opacity; position: absolute; left: 0px; top: 0px; z-index: 6; padding-left: 24px; }
+.option .check_active:hover, .option .check_active:active { opacity : 1; transition-property : opacity; }
+#book_appointment { text-align: center; padding-top: 50px; padding-bottom: 150px; }
+.confirm_subtext { font-style: italic; padding-left: 100px; padding-right: 100px; padding-top: 16px; line-height: 26px; font-size: 22px; }
+#container #footer { position: fixed; bottom: -4px; z-index: 5; }
+div, p, h1, h2, h3, h4, h5, h6, img { margin: 0px; padding: 0px; border-style: none; }
+#book_appointment #decline { color: #1957AE; text-decoration: underline; font-style: italic; font-size: 24px; padding-top: 25px; }
+.option #check_active { position: absolute; z-index: 6; left: 0px; top: 0px; padding-left: 24px; }
+</style>
+</head>
+<body>
+<!--Body-->
+<body onLoad="iPhoneAlert();">
+<section id="container">
+  <header id="header"> <img src="images/header_img.png" width="640" height="94" alt="Calendar Invite"> </header>
+  <footer>
+    <div id="footer"><!--Link nav_img.png to download Atlas--><img src="images/nav_img.png" width="640" height="98" alt="Navigation"></div>
+  </footer>
+  <section>
+    <div id="invite_section"><!--Make dynamic--><img src="images/avatar.png" alt="Avatar" name="avatar" width="76" height="76" id="avatar">
+      <div id="description">
+        <h1><!--Make dynamic-->John Smith has invited you to:</h1>
+        <h2>"<span class="event_blue"><!--Make dynamic-->Dinner at Venice Country Club.</span>"</h2>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div id="time_choices">
+      <h1>Please touch to confirm the best time from the choices <!--Make dynamic-->John has given you below:</h1>
+      <div class="option"> 
+      <div class="check_active"><img src="images/check_active.png" width="586" height="97" alt="chosen"></div>
+      <img src="images/option1.png" alt="Option 1" name="option1_img" width="586" height="97" class="option_img">
+        <div class="date"><!--Make dynamic-->Thursday, February 12, 2013</div>
+        <div class="time_container">
+          <ul class="list">
+            <li class="time"><!--Make dynamic-->3:15</li>
+            <li class="am_pm"><sup><!--Make dynamic-->PM</sup></li>
+            <li class="to"><img src="images/to_img.png" width="24" height="19" alt="to"></li>
+            <li class="time"><!--Make dynamic-->5:00</li>
+            <li class="am_pm"><sup><!--Make dynamic-->PM</sup></li>
+          </ul>
+        </div>
+      </div>
+      <div class="option"> 
+      <div class="check_active"><img src="images/check_active.png" width="586" height="97" alt="chosen"></div>
+      <img src="images/option2.png" alt="Option 2" name="option2_img" width="586" height="97" class="option_img">
+        <div class="date"><!--Make dynamic-->Thursday, February 12, 2013</div>
+        <div class="time_container">
+          <ul class="list">
+            <li class="time"><!--Make dynamic-->3:15</li>
+            <li class="am_pm"><sup><!--Make dynamic-->PM</sup></li>
+            <li class="to"><img src="images/to_img.png" width="24" height="19" alt="to"></li>
+            <li class="time"><!--Make dynamic-->5:00</li>
+            <li class="am_pm"><sup><!--Make dynamic-->PM</sup></li>
+          </ul>
+        </div>
+      </div>
+      <div class="option">
+        <div class="check_active"><img src="images/check_active.png" width="586" height="97" alt="chosen"></div>
+        <img src="images/option3.png" alt="Option 3" name="option3_img" width="586" height="97" class="option_img">
+        <div class="date"><!--Make dynamic-->Thursday, February 12, 2013</div>
+        <div class="time_container">
+          <ul class="list">
+            <li class="time"><!--Make dynamic-->3:15</li>
+            <li class="am_pm"><sup><!--Make dynamic-->PM</sup></li>
+            <li class="to"><img src="images/to_img.png" width="24" height="19" alt="to"></li>
+            <li class="time"><!--Make dynamic-->5:00</li>
+            <li class="am_pm"><sup><!--Make dynamic-->PM</sup></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+  <section> 
+    <!--Make dynamic-->
+    <div id="book_appointment"><img src="images/confirm_img.png" width="448" height="72" alt="Confirm">
+    <div id="decline"><!--Make dynamic-->Decline</div>
+      <p class="confirm_subtext">Keep in mind whichever time you choose will instantly populate into <!--Make dynamic-->John's calendar.</p>
+    </div>
+  </section>
+</section>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=.5; maximum-scale=.5; user-scalable=0;">
+<title>Success!</title>
+<!--IOS Alert-->
+<script type="text/javascript">
+function iPhoneAlert() {
+	if((navigator.userAgent.match(/iPhone/i))||(navigator.userAgent.match(/iPod/i))){
+		setTimeout(function() { window.scrollTo(0, 1) }, 100);
+	}
+}
+</script>
+<style>
+body { margin: 0; padding: 0; color: #000000; font-family: "Myriad Pro", Arial, Helvetica; }
+#container { max-width: 640px; margin: 0 auto; text-align: left; height: 848px; width: 640px; position: relative; }
+#container #header { position: fixed; z-index: 5; }
+#container #sub_header { background-color: #e4e4e4; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #999; padding-top: 105px; padding-bottom: 10px; text-align: center; }
+#sub_header h1 { font-size: 48px; font-weight: normal; text-shadow: 1px 1px 2px #ffffff; filter: dropshadow(color=#ffffff, offx=1, offy=1); }
+#download_section { text-align: center; }
+#download_section h1 { font-size: 28px; font-weight: lighter; text-align: center; padding-right: 50px; padding-left: 50px; padding-top: 30px; padding-bottom: 30px; line-height: 30px; }
+#download_section #appointment { padding-top: 25px; font-size: 30px; padding-bottom: 50px; line-height: 36px; font-weight: bold; }
+.time { color: #1754ac; }
+.remember { font-style: italic; font-size: 24px; }
+#container #footer { position: fixed; bottom: -7px; z-index: 5; }
+div, p, h1, h2, h3, h4, h5, h6, img { margin: 0px; padding: 0px; border-style: none; }
+</style>
+</head>
+<body>
+<!--Body-->
+<body onLoad="iPhoneAlert();">
+<section id="container">
+  <header id="header">
+  	<img src="images/header_img.png" width="640" height="94" alt="Calendar Invite">
+  </header>  
+  <footer>
+  	<div id="footer"><!--Link nav_img.png to download Atlas--><img src="images/nav_img.png" width="640" height="98" alt="Navigation"></div>
+  </footer>
+  <section>
+    <div id="sub_header">
+        <h1>Success!</h1>
+    </div>
+  </section>
+  <section>
+    <div id="download_section">
+      <h1>Thank you for using Atlas! The fastest and easiest way for busy people to save valuable time everyday.</h1>
+    <img src="images/icon_img.png" width="167" height="120" alt="Atlas"> 
+    <div id="appointment"><p>Your appointment is confirmed for</p> 
+    	<!--dynamic--><p class="time">Friday, February 13, 2013 @ 11:15AM</p> 
+      <p>with <!--dynamic-->John Smith, an Atlas user.</p></div>
+    <!--link to app store--><p><img src="images/get_atlas_img.png" width="448" height="72" alt="Get Atlas!"></p>
+    <p class="remember">Remember: it's free!</p>
+    </div>
+    </div>
+  </section>
+</section>
+</body>
+</html>

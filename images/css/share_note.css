@@ -1,0 +1,92 @@
+body {
+	 margin: 0;
+	 padding: 0;
+	 color: #000000;
+	 font-family: "Myriad Pro", Arial, Helvetica;
+	 font-size: 0.8em;
+	  }
+	  
+#container { 
+	max-width: 640px;
+	margin: 0 auto; 
+	text-align: left; 
+	height: 848px; 
+	width: 640px; 
+	position: relative;
+	 }
+#container #header { 
+	position: fixed; 
+	z-index: 5; 
+	}
+#container #invite_section { 
+	background-color: #e4e4e4; 
+	border-bottom-width: 1px; 
+	border-bottom-style: solid; 
+	border-bottom-color: #999; 
+	padding-top: 90px; 
+	padding-bottom: 18px;
+	 }
+#invite_section #avatar { 
+	float: left; 
+	padding-left: 20px;
+	padding-top: 14px;
+	 }
+#invite_section #description { 
+	padding-top: 15px; 
+	padding-left: 0px; 
+	text-align: center; 
+	padding-right: 100px;
+	 }
+#invite_section h1 { 
+	font-size: 26px; 
+	padding-bottom: 5px; 
+	}
+#invite_section #description h2 { 
+	font-size: 24px; 
+	font-weight: bold; 
+	padding-left: 10px; 
+	font-style: italic;
+	 }
+.event_blue { 
+	color: #1c59af; 
+	font-style: italic; 
+	}
+.blue_text { 
+	color: #3b6fb9; 
+	}
+#main_content {
+	 text-align: center; 
+	 padding-top: 25px; 
+	 padding-bottom: 125px; 
+	 }
+.main_content_text {
+	 font-style: italic; 
+	 padding-left: 75px; 
+	 padding-right: 75px; 
+	 padding-top: 50px; 
+	 line-height: 30px; 
+	 font-size: 30px; 
+	 font-weight: normal; 
+	 padding-bottom: 75px; 
+	 color: #1c59af;
+	  }
+.main_content_text2 { 
+	font-style: italic; 
+	padding-left: 100px; 
+	padding-right: 100px; 
+	padding-top: 15px; 
+	line-height: 26px; 
+	font-size: 22px; 
+	font-weight: normal; 
+	padding-bottom: 20px; 
+	}
+#container #footer { 
+	position: fixed; 
+	bottom: -4px; 
+	z-index: 5; 
+	}
+div, p, h1, h2, h3, h4, h5, h6, img { 
+	margin: 0px; 
+	padding: 0px; 
+	border-style: none;
+	 }

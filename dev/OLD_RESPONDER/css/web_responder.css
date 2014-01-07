@@ -1,0 +1,241 @@
+/* CSS Document */
+
+/******* Body ********/
+body
+{
+	position: absolute;
+	z-index: -1;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	color: #323232;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 1.0em;
+}
+
+/******* Header ********/
+.header_bar
+{
+	position: fixed;
+	top: 0px;
+	z-index: 10;
+	width: 100%;
+	height: 58px;
+	background: url(../images/header_slice.png) repeat-x;
+}
+.header_img_static
+{
+	top: 0px;
+	z-index: 3;
+	margin: 0px auto;
+	width: 897px;
+}
+.sub_header
+{
+	width: 100%;
+	height: 396px;
+	background: url(../images/sub_header_slice.jpg) repeat-x;
+	/*overflow-x: hidden;*/
+}
+.sub_header_img_static
+{
+	position: relative;
+	margin: 0px auto;
+	width: 897px;
+	height: 396px;
+	background: url(../images/sub_header_bk.jpg);
+}
+.sub_header_img_static .phones
+{
+	position: absolute;
+	top: 75px;
+	left: 0px;
+}
+.sub_header_img_static .app_store
+{
+	position: absolute;
+	top: 100px;
+	left: 450px;
+}
+.sub_header_img_static .google_play
+{
+	position: absolute;
+	top: 100px;
+	left: 675px;
+}
+.sub_header_img_static .cloud
+{
+	position: absolute;
+	top: 200px;
+	left: 460px;
+}
+
+/******* Main Content ********/
+.content
+{
+	position: relative;
+	width: 900px;
+	display: none;
+}
+
+/******* Description ********/
+.greeting
+{
+	font-size: 1.2em;
+	font-weight: bold;
+}
+.description
+{
+	position:relative;
+	width: 600px;
+	background: #e1e1e1;
+	border: 1px solid #767676;
+	border-radius: 5px;
+	webkit-border-radius: 5px;
+	box-shadow: 0px 2px 4px 0px #666;
+	webkit-box-shadow: 0px 2px 4px 0px #666;
+}
+.description table
+{
+	position:relative;
+	width: 500px;
+	font-size: 1.1em;
+	font-weight: bold;
+	line-height: 28px;
+	padding: 5px;
+}
+.avatar
+{
+	vertical-align: middle;
+	border: 1px solid #767676;
+	box-shadow: 0px 2px 4px 0px #666;
+	webkit-box-shadow: 0px 2px 4px 0px #666;
+}
+.atlas_icon
+{
+	vertical-align: middle;
+}
+.invitee_name, .invitee_firstname
+{
+	color: #215eb3;
+	font-weight: bold;
+}
+.event_title, .event_location
+{
+	color: #1c59af;
+	font-weight: bold;
+}
+
+/******* Booked ********/
+.booked
+{
+	position:relative;
+	width: 600px;
+	table-layout: fixed;
+	font-size: 1.0em;
+	line-height: 28px;
+}
+
+/******* Options ********/
+.options_header
+{
+	position: relative;
+	font-weight:bold;
+	color:#333;
+}
+.options
+{
+	position: relative;
+	width: 268px;
+	height: 210px;
+	text-align: center;
+}
+.option
+{
+	margin: 0 40px;
+	width: 208px;
+	height: 210px;
+	float: left;
+}
+.option_img
+{
+	position:absolute;
+	z-index: -1;
+}
+.option_header
+{
+	position: relative;
+	top: 25px;
+	font-size: 1.1em;
+	color: #FFF;
+	z-index: 0;
+}
+.option_desc
+{
+	position: relative;
+	top: 59px;
+	font-size: 0.8em;
+	line-height: 18px;
+	z-index: 0;
+}
+.option_vote
+{
+	position: relative;
+	top: 72px;
+	position: relative;
+	z-index: 0;
+}
+
+/******* Calendar ********/
+.calendar_header
+{
+	font-size: 1.4em;
+}
+.calendar
+{
+	width: 900px; 
+	text-align: center;
+}
+.calendar a
+{
+	padding: 0 25px;
+}
+
+/***************/
+
+.vote, .decline, .get_atlas
+{
+	cursor: pointer;
+}
+
+/******* Footer ********/
+.footer
+{
+	width: 100%;
+	height: 119px;
+	background: url(../images/footer_bk.png) repeat-x;
+}
+.navlist
+{
+	margin: 0px auto;
+	padding-top: 50px;
+	width: 897px;
+}
+.navlist li
+{
+	display: inline;
+	padding-right: 40px;
+	list-style-type: none;
+}
+
+.version
+{
+	font-size:0.5em;
+	color: #1E5AAF;
+	cursor: default;
+}
+.version::selection, .version::-moz-selection
+{
+	background: #1E5AAF;
+	color: #fff;
+}

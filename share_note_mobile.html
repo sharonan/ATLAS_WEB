@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=.5; maximum-scale=.5; user-scalable=0;">
+<link href="css/share_note.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="css/jquery_alerts.css" media="all" rel="stylesheet" type="text/css"/>
+
+   <link rel="icon" href="https://launchrock-assets.s3.amazonaws.com/favicon-files/y3d2El5mjKplmgt.png">
+   <meta name="viewport" content="width=device-width; initial-scale=.5; maximum-scale=.5; user-scalable=0;">
+   
+   
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/underscore-1.1.6.js"></script>
+    <script src="http://www.parsecdn.com/js/parse-1.1.14.min.js"></script>
+    <script src="js/share_note.js"></script>
+      <script src="js/alerts.js"></script>
+
+<title>Share A Note</title>
+<!--IOS Alert-->
+<script type="text/javascript">
+function iPhoneAlert() {
+	if((navigator.userAgent.match(/iPhone/i))||(navigator.userAgent.match(/iPod/i))){
+		setTimeout(function() { window.scrollTo(0, 1) }, 100);
+	} 
+}
+</script>
+
+</head>
+<body>
+<body onLoad="iPhoneAlert();">
+	<section id="container">
+  		<header id="header"> 
+  			 <img src="images/header_note_share_img.png" width="640" height="94" alt="Share Note"> 
+  		</header>
+  		<footer>
+   			 <div id="footer"><!--Link nav_img.png to download Atlas-->
+   			 	<img src="images/nav_img.png" width="640" height="98" alt="Navigation">
+   			 </div>
+  		</footer>
+ 	 <section>
+    		<div id="invite_section" id="inviteSection">
+    		<img src="images/avatar.png" alt="Avatar" name="avatar" width="76" height="76" id="avatar">
+     	 		<div id="description">
+     		 	  	<h1>
+      		 	 		<span class="blue_text" id="inviter">
+        				</span> has shared a note:
+        			</h1>
+      		 	 	<h2>&quot;
+        				<span class="blue_text" id="noteTitle">
+        				</span>&quot;.
+       				</h2>
+     			</div>
+    		</div>
+  		</section>
+  	<section>
+    </div>
+  </section>
+  <section> 
+    <!--Make dynamic-->
+    <div id="main_content" >
+      <p class="main_content_text" id="noteContent">
+        <br />
+    </p>
+      <p =><img src="images/ive_read_btn.png" width="415" height="82" id="readIt"></p>
+      <p class="main_content_text2" id="notifyMessage"></p></div>
+  </section>
+</section>
+</body>
+</html>

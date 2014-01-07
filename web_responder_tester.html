@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=.5; maximum-scale=.5; user-scalable=0;">
+
+<link href="css/jquery_alerts.css" media="all" rel="stylesheet" type="text/css"/>
+
+   <link rel="icon" href="https://launchrock-assets.s3.amazonaws.com/favicon-files/y3d2El5mjKplmgt.png">
+   <meta name="viewport" content="width=device-width; initial-scale=.5; maximum-scale=.5; user-scalable=0;">
+   
+   
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/underscore-1.1.6.js"></script>
+    <script src="http://www.parsecdn.com/js/parse-1.1.14.min.js"></script>
+    <script src="js/reset_all.js"></script>
+      <script src="js/alerts.js"></script>
+
+<title>Test Web Responder</title>
+<!--IOS Alert-->
+<script type="text/javascript">
+function iPhoneAlert() {
+	if((navigator.userAgent.match(/iPhone/i))||(navigator.userAgent.match(/iPod/i))){
+		setTimeout(function() { window.scrollTo(0, 1) }, 100);
+	} 
+}
+</script>
+
+</head>
+<body>
+<body onLoad="iPhoneAlert();">
+	<section id="container">
+  		<header id="header"> 
+  		</header>
+  		
+ 	 <section>
+    		<div id="invite_section" id="inviteSection">
+     	 		<div id="description">
+     		 	  	<h2>
+     		 	  	<a id="resestAll" >
+     		 	  	Web Responder Sites url (add object Id from Parse table accordingly) :<br><br>
+     		 	  	
+     		 	  	 Share A Note : <br><a id="noteShareUrl" >
+     		 	  	 "http://getatlastest.com/reply/share_note_mobile.html?id="
+     		 	  	 <a/>
+     		 	  	<br> Type note ID from NotesShare table	<input type="text" id="noteShareObjectId">
+ 									 <input type="submit" id="noteShareClicked"><br>
+ 						
+ 						
+ 						
+ 						
+ 						
+ 					 Task : <br><a id="taskAssignUrl" >
+     		 	  	 "http://getatlastest.com/reply/assign_to_task_mobile.html?id="
+     		 	  	 <a/>
+     		 	  	<br> Type task ID from TaskAssignNew table	<input type="text" id="taskAssignObjectId">
+ 									 <input type="submit" id="taskAssignClicked"><br>			 
+ 									 
+ 					 Invite : <br><a id="inviteEventUrl" >
+     		 	  	 "http://getatlastest.com/reply/invite_to_event_mobile.html?id="
+     		 	  	 <a/>
+     		 	  	<br> Type invite ID from EventInviteNew table	<input type="text" id="inviteEventObjectId">
+ 									 <input type="submit" id="inviteEventClicked"><br>
+ 						
+ 					
+ 					 Invite To Atlas : <br><a id="inviteToAtlasUrl" >
+     		 	  	 "http://getatlastest.com/reply/invite_to_atlas_mobile.html?id="
+     		 	  	 <a/>
+     		 	  	<br> Type invite to Atlas ID from inviteToAtlas table	<input type="text" id="inviteToAtlasObjectId">
+ 									 <input type="submit" id="inviteToAtlasClicked"><br>
+     		 	  	
+     		 	  	
+     		 	  	
+     		 	  	
+     		 	  	Reset :
+     		 	  	
+     		 	  	<br><br>
+     		 	  		 Note reset objectId: <input type="text" name="note" id="noteObjectId">
+ 									 <input type="submit" id="resetNoteClicked"><br>
+ 						Task reset objectId: <input type="text" name="task" id="taskObjectId">
+ 									 <input type="submit" id="resetTaskClicked"><br>
+ 						Invite reset objectId: <input type="text" name="invite" id="inviteObjectId">
+ 									 <input type="submit" id="resetInviteClicked"><br>
+ 						
+     		 	  	
+     		 	  	
+     		 	  	</a>
+     		 	  	
+     		 	  	
+     		 	  	
+     		 	  	
+        			</h2>
+     			</div>
+    		</div>
+  		</section>
+  	<section>
+    </div>
+  </section>
+  <section> 
+    <!--Make dynamic-->
+    <div id="main_content" >
+      <p class="main_content_text" id="noteContent">
+        <br />
+    </p>
+  </section>
+</section>
+</body>
+</html>

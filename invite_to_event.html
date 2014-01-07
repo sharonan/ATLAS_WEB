@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head style="background-color:blue;">
+    <meta charset="utf-8">
+    <title>Calendar Invite</title>
+    <link rel="icon" href="https://launchrock-assets.s3.amazonaws.com/favicon-files/y3d2El5mjKplmgt.png">
+    <link href="css/cal_invite.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="css/jquery_alerts.css" media="all" rel="stylesheet" type="text/css"/>
+    
+    <meta name="viewport" content="width=device-width; initial-scale=.5; maximum-scale=.5; user-scalable=0;">
+   
+   
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/underscore-1.1.6.js"></script>
+    <script src="http://www.parsecdn.com/js/parse-1.0.18.min.js"></script>  
+    <script src="js/invite_to_event.js"></script>
+    <script src="js/alerts.js"></script>
+    <!--IOS Alert-->
+<script type="text/javascript">
+function iPhoneAlert() {
+	if((navigator.userAgent.match(/iPhone/i))||(navigator.userAgent.match(/iPod/i))){
+		setTimeout(function() { window.scrollTo(0, 1) }, 100);
+	}
+}
+</script>
+  
+
+  </head>
+  <body onLoad="iPhoneAlert();">
+<section id="container">
+  		<header id="header_img">
+  			 <img  src="images/header_cal_invite_img.png" width="640" height="94" alt="Calendar Invite"> 
+  		</header>
+  		<footer>
+   			 <div id="footer"><!--Link nav_img.png to download Atlas-->
+   			 	<img src="images/nav_img.png" width="640" height="98" alt="Navigation">
+   			 </div>
+  		</footer>
+  		
+ 	 <section>
+    
+    		<div id="invite_section">
+    	
+    	<img src="images/avatar.png" alt="Avatar" name="avatar" width="76" height="76" id="avatar">
+      	
+      	<div id="description">
+      		  <h1><div id="inviteeh1"/></h1>
+      	  	  <h2><span class="event_blue"><div id="event"/></span></h2>
+     	</div>
+    </div>
+  	<section>
+    </div>
+  </section>
+    <!-- Todo App Interface -->
+
+    <div id="atlasapp" >
+      <div class="content">
+      </div>
+    </div>
+    
+    
+  
+   
+
+    <!-- Templates -->
+
+<script type="text/template" id="success-template">
+      <form class="success-cal-form">
+      	<div id="download_section">
+     	 <h1>Thank you for using Atlas! The fastest and easiest way for busy people to save valuable time everyday.</h1>
+    	<img src="images/icon_img.png" width="167" height="120" alt="Atlas"> 
+    	<div id="appointment">
+    		<p id="successString" ></p> 
+    		
+    		<p class="time_success" id="time_picked"></p> 
+      		<p id="withId" ></p>
+      	</div>
+    		<!--link to app store-->
+    	<p>
+    		<img src="images/get_atlas_img.png" width="448" height="72" alt="Get Atlas!">
+    	</p>
+    	<p class="remember">Remember: it's free!</p>
+    </div>
+      
+      </form>
+</script>
+
+
+
+
+<script type="text/template" id="cal-template">
+      <form class="cal-form">
+  
+    	<div id="time_choices">
+ 		 	<div class="option" id="option1" > 
+   				<div class="check_event" id="choose1">
+   		   				<img  src="images/check_active.png" width="586" height="97" alt="chosen" >
+     			</div>
+      			<img id="dateImg1"  style="visibility:hidden;" src="images/option1.png" alt="Option 1" name="option1_img" width="586" height="97" class="option_img">
+        		<div class="date" id="day_date_1">
+        			
+        		</div>
+        		<div class="time_container">
+         			 <ul class="list">
+         			 
+         				   <li class="time" id="time1from" ></li>
+       				     <li class="am_pm"><sup id="am_pm_from1"></sup ></li>
+         				   <li class="to"><img src="images/to_img.png" width="24" height="19" alt="to"></li>
+        			    <li class="time" id="time1to"></li>
+       				     <li class="am_pm"  ><sup id="am_pm_to1"></sup></li>
+  			        </ul>
+     		   	</div>
+           </div>
+		
+ 		 <div class="option" id="option2" > 
+      			<div class="check_event" id="choose2">
+      				<img src="images/check_active.png" width="586" height="97" alt="chosen">
+      			</div>
+     				 <img id="dateImg2" style="visibility:hidden;" src="images/option2.png" alt="Option 2" name="option2_img" width="586" height="97" class="option_img">
+        		<div class="date" id="day_date_2"></div>
+        		<div class="time_container">
+          			<ul class="list">
+            			<li class="time" id="time2from"></li>
+            			<li class="am_pm" ><sup id="am_pm_from2"></sup></li>
+            			<li class="to"><img src="images/to_img.png" width="24" height="19" alt="to"></li>
+            			<li class="time" id="time2to"></li>
+            			<li class="am_pm"  ><sup id="am_pm_to2"></sup></li>
+          		</ul>
+        	</div>
+      	</div>
+      
+      
+      
+  <div class="option" id="option3"> 
+      <div class="check_event" id="choose3">
+      		<img src="images/check_active.png" width="586" height="97" alt="chosen">
+      </div>
+      <img id="dateImg3" style="visibility:hidden;" src="images/option3.png" alt="Option 3" name="option3_img" width="586" height="97" class="option_img">
+        <div class="date" id="day_date_3"></div>
+        <div class="time_container">
+          <ul class="list">
+            <li class="time" id="time3from"></li>
+            <li class="am_pm"  ><sup id="am_pm_from3"></sup></li>
+            <li class="to"><img src="images/to_img.png" width="24" height="19" alt="to"></li>
+            <li class="time" id="time3to"></li>
+            <li class="am_pm"  ><sup id="am_pm_to3"></sup></li>
+          </ul>
+        </div>
+      </div>
+		
+	
+  	
+  <section> 
+    <!--Make dynamic-->
+    <div id="book_appointment"><img id="confirmEvent" src="images/confirm_img.png" width="448" height="72" alt="Confirm">
+    <div id="decline">Decline</div>
+      <p class="confirm_subtext" id="confirmSubtext" > </p>
+    </div>
+  </section>
+
+ </form>
+ </section>  <!--of container-->
+ </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+    <script type="text/template" id="item-template">
+      <li class="<%= done ? 'completed' : '' %>">
+	<div class="view">
+	  <input class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %>>
+	  <label class="todo-content"><%= content %></label>
+	  <button class="todo-destroy"></button>
+	</div>
+	<input class="edit" value="<%= content %>">
+      </li>
+    </script>
+
+    <script type="text/template" id="stats-template">
+      <footer id="footer">
+	<span id="todo-count"><strong><%= remaining %></strong> <%= remaining == 1 ? 'item' : 'items' %> left</span>
+	<ul id="filters">
+	  <li>
+	    <a href="javascript:void(0)" id="all" class="selected">All</a>
+	  </li>
+	  <li>
+	    <a href="javascript:void(0)" id="active">Active</a>
+	  </li>
+	  <li>
+	    <a href="javascript:void(0)" id="completed">Completed</a>
+	  </li>
+	</ul>
+	<button id="clear-completed">Clear completed (<%= done %>)</button>
+      </footer>
+    </script>
+    
+    
+    
+    
+    
+    
+    
+
+  </body>
+
+</html>
